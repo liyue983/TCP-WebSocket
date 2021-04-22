@@ -62,9 +62,6 @@ Array.prototype.remove = function (val) {
     }
 };
 
-function ab2str(buf) {
-    return String.fromCharCode.apply(null, new Uint16Array(buf));
-}
 
 var scks = [];
 
@@ -81,7 +78,7 @@ net.createServer(function (sock) {
     // 为这个socket实例添加一个"data"事件处理函数
     sock.on('data', function (data) {
         console.log('DATA ' + sock.remoteAddress + ': ' + data);
-        io.emit("chat message", ab2str(data))//将数据发送到网页
+        io.emit("chat message", String(data))//将数据发送到网页
         // 回发该数据，客户端将收到来自服务端的数据
         for (var i = 0; i < scks.length; i++) {
             if (scks[i] == sock) { continue; }
